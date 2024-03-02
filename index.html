@@ -14,7 +14,7 @@
 <script>
   // You can also set which camera to use (front/back/etc)
   // @SEE https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia  
-  navigator.mediaDevices.getUserMedia({audio: false, video: true})
+  navigator.mediaDevices.getUserMedia({audio: false, video: {facingMode:"environment" }})
   .then(stream => {
     let $video = document.querySelector('video')
     $video.srcObject = stream
@@ -77,9 +77,9 @@
     <a-scene background="color: #ECECEC" embeddedarjs>
         <a-assets><video id="webcam" playsinline></video></a-assets> 
         <a-entity>    
-        <a-entity video="color: green;" position="0 0 -1" scale="0.1 0.1 0.1"> </a-entity> 
+        <a-entity video="color: green;" position="0 0 -10" scale="1 1 1"> </a-entity> 
         <a-entity camera look-controls>
-          <a-plane  position="0 0 -2" scale="2 2 2" shadow material="src: #webcam" width="window.screen.width" height="window.screen.height"></a-plane>
+          <a-plane  position="0 0 -11" scale="10 10 10" shadow material="src: #webcam" width="window.screen.width" height="window.screen.height"></a-plane>
         </a-entity>   
       </a-entity>
     </a-scene>
