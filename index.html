@@ -2,8 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-          //выравнивание контента по разрешение устройства
-        <meta name="viewport" content="width=device-width, user-scalable=yes, minimum-scale=0.5, maximum-scale=0.5">
+          //выравнивание контента по разрешение устройства        
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>WebXR Video Texture</title>
         <style>
@@ -49,8 +48,9 @@
     // Создаем материал для нашей плоскости
     let oldMaterial = new AFRAME.THREE.MeshBasicMaterial({ map: oldTexture });
     console.log("W "+window.outerWidthh + " H "+window.outerHeight);
+    aspectRatio = window.screen.width / window.screen.height;
     // Создаем плоскость с размерами 3x3
-    let oldGeometry = new AFRAME.THREE.PlaneGeometry(10, 10);
+    let oldGeometry = new AFRAME.THREE.PlaneGeometry(10*aspectRatio, 10);
     // объединяем плоскость и материал в объект OldPlane
     let oldPlane = new AFRAME.THREE.Mesh(oldGeometry, oldMaterial);
     //Включаем у материала прозрачность, что фон стал прозрачным
@@ -59,16 +59,15 @@
     oldPlane.position.set(0, 0, -5);
     console.log("W "+window.screen.width + " H "+window.screen.height);
       // рассчитываем соотношение сторон
-    aspectRatio = window.screen.width / window.screen.height;
+    
+    console.log("Соотношение сторон: "+aspectRatio);
       // Создание компонента AFRAME
     //Создаем объект при помощи AFRAME, также плоскость и передаем тип объекта и материал
     this.el.setObject3D('mesh', new AFRAME.THREE.Mesh(oldGeometry, oldMaterial));
     //AFRAME.THREE.el.Object3D.scale.set( 1,1, 1);
   },
   //Описываем функцию удаления, ее должны вызывать, когда модель нужно удалить, смена сцены, или еще какие то события
-  remove: function() {
-    this.el.removeObject3D('mesh');
-  }
+  
 }); 
 </script>
 </head>
@@ -77,6 +76,7 @@
         <a-assets><video id="webcam" playsinline></video></a-assets>
         <a-video id="oldvideo" autoplay playsinline></a-video>
         <a-entity video="color: green;" position="0 0 -10" scale="1 1 1"> </a-entity> 
-        <a-plane position="0 0 -50" rotation="0 0 90" width="100" height="200"shadow material="src: #webcam"></a-plane>
+        <a-plane position="0 0 -50" rotation="0 0 0" width="200*aspectRatio" height="200"shadow material="src: #webcam"></a-plane>
+        <a-marker-camera preset='hiro'></a-marker-camera>
     </a-scene>
 </body>
