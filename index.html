@@ -13,7 +13,7 @@
 <script>
   // You can also set which camera to use (front/back/etc)
   // @SEE https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-  navigator.mediaDevices.getUserMedia({audio: false, video: {facingMode: { exact: "environment" }}})
+  navigator.mediaDevices.getUserMedia({audio: false, video: {facingMode:"environment" }})
   .then(stream => {
     let $video = document.querySelector('video')
     $video.srcObject = stream
@@ -51,7 +51,7 @@
     console.log("W "+window.outerWidthh + " H "+window.outerHeight);
     aspectRatio = window.screen.width / window.screen.height;
     // Создаем плоскость с размерами 3x3
-    let oldGeometry = new AFRAME.THREE.PlaneGeometry(10*aspectRatio, 10);
+    let oldGeometry = new AFRAME.THREE.PlaneGeometry(10, 10*aspectRatio);
     // объединяем плоскость и материал в объект OldPlane
     let oldPlane = new AFRAME.THREE.Mesh(oldGeometry, oldMaterial);
     //Включаем у материала прозрачность, что фон стал прозрачным
@@ -77,7 +77,7 @@
         <a-assets><video id="webcam" playsinline></video></a-assets>
         <a-video id="oldvideo" autoplay playsinline></a-video>
         <a-entity video="color: green;" position="0 0 -10" scale="1 1 1"> </a-entity> 
-        <a-plane position="0 0 -50" rotation="0 0 0" width="200" height="200*aspectRatio"shadow material="src: #webcam"></a-plane>
+        <a-plane position="0 0 -50" rotation="0 0 0" width="300" height="200"shadow material="src: #webcam"></a-plane>
         <a-marker-camera preset='hiro'></a-marker-camera>        
     </a-scene>
 </body>
