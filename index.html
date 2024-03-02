@@ -34,7 +34,7 @@
   //включаем зацикливание
     oldVideo.loop = true;
     // указываем источник видео    
-    oldVideo.src = 'video/Testvp8.webm'; 
+    oldVideo.src = 'video/WEBGL00000000.webm'; 
     oldVideo.crossOrigin = 'anonymous';
     // отключаем звук
     oldVideo.muted = true;
@@ -43,8 +43,11 @@
   // создаем элемент видео   
     // создаем текстуру с нашим видео
     let oldTexture = new AFRAME.THREE.VideoTexture(oldVideo);
+    oldTexture.needsUpdate = true;
     oldTexture.minFilter = AFRAME.THREE.LinearFilter;
     oldTexture.magFilter = AFRAME.THREE.LinearFilter;
+    //oldTexture.encoding = THREE.sRGBEncoding;
+    //oldTexture.outputEncoding = THREE.sRGBEncoding;
     //указываем формат текстуры, здесь RGBAFormat который поддерживает прозрачный фон
     oldTexture.format = AFRAME.THREE.RGBAFormat;    
     // Создаем материал для нашей плоскости
