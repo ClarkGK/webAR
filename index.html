@@ -9,10 +9,11 @@
           body { margin: 0; overflow: hidden; }
         </style>
 <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+<script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
 <script>
   // You can also set which camera to use (front/back/etc)
   // @SEE https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-  navigator.mediaDevices.getUserMedia({audio: false, video: true})
+  navigator.mediaDevices.getUserMedia({audio: false, video: {facingMode: { exact: "environment" }}})
   .then(stream => {
     let $video = document.querySelector('video')
     $video.srcObject = stream
@@ -72,11 +73,11 @@
 </script>
 </head>
 <body>
-    <a-scene background="color: #ECECEC">
+    <a-scene background="color: #ECECEC" embeddedarjs>
         <a-assets><video id="webcam" playsinline></video></a-assets>
         <a-video id="oldvideo" autoplay playsinline></a-video>
         <a-entity video="color: green;" position="0 0 -10" scale="1 1 1"> </a-entity> 
-        <a-plane position="0 0 -50" rotation="0 0 0" width="200*aspectRatio" height="200"shadow material="src: #webcam"></a-plane>
-        <a-marker-camera preset='hiro'></a-marker-camera>
+        <a-plane position="0 0 -50" rotation="0 0 0" width="200" height="200*aspectRatio"shadow material="src: #webcam"></a-plane>
+        <a-marker-camera preset='hiro'></a-marker-camera>        
     </a-scene>
 </body>
