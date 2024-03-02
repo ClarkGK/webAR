@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+          //выравнивание контента по разрешение устройства
+        <meta name="viewport" content="width=device-width, user-scalable=yes, minimum-scale=0.5, maximum-scale=0.5">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>WebXR Video Texture</title>
+        <style>
+          body { margin: 0; overflow: hidden; }
+        </style>
+<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+<script>
+  // You can also set which camera to use (front/back/etc)
+  // @SEE https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+  navigator.mediaDevices.getUserMedia({audio: false, video: true})
+  .then(stream => {
+    let $video = document.querySelector('video')
+    $video.srcObject = stream
+    $video.onloadedmetadata = () => {
+      $video.play()
+    }
+  })  
+ AFRAME.registerComponent('video', {
+  schema: {
+    color: {
+      default: '#000'
+    },
+  },
+  // описание функции update (обновление содержимого относительно FPS/кадры в секунду)
+  update: function() {
+    let oldVideo = document.createElement('video');  
+  //включаем зацикливание
+    oldVideo.loop = true;
+    // указываем источник видео    
+    oldVideo.src = 'video/Testvp8.webm'; 
+    oldVideo.crossOrigin = 'anonymous';
+    // отключаем звук
+    oldVideo.muted = true;
+    // воспроизводим видео    
+    oldVideo.play();
+  // создаем элемент видео   
+    // создаем текстуру с нашим видео
+    let oldTexture = new AFRAME.THREE.VideoTexture(oldVideo);
+    oldTexture.minFilter = AFRAME.THREE.LinearFilter;
+    oldTexture.magFilter = AFRAME.THREE.LinearFilter;
+    //указываем формат текстуры, здесь RGBAFormat который поддерживает прозрачный фон
+    oldTexture.format = AFRAME.THREE.RGBAFormat;    
+    // Создаем материал для нашей плоскости
+    let oldMaterial = new AFRAME.THREE.MeshBasicMaterial({ map: oldTexture });
+    console.log("W "+window.outerWidthh + " H "+window.outerHeight);
+    // Создаем плоскость с размерами 3x3
+    let oldGeometry = new AFRAME.THREE.PlaneGeometry(10, 10);
+    // объединяем плоскость и материал в объект OldPlane
+    let oldPlane = new AFRAME.THREE.Mesh(oldGeometry, oldMaterial);
+    //Включаем у материала прозрачность, что фон стал прозрачным
+    oldPlane.material.transparent = true;    
+    //Задаем расположение для oldPlane, но это уже не требуется, так как есть строка ниже
+    oldPlane.position.set(0, 0, -5);
+    console.log("W "+window.screen.width + " H "+window.screen.height);
+      // рассчитываем соотношение сторон
+    aspectRatio = window.screen.width / window.screen.height;
+      // Создание компонента AFRAME
+    //Создаем объект при помощи AFRAME, также плоскость и передаем тип объекта и материал
+    this.el.setObject3D('mesh', new AFRAME.THREE.Mesh(oldGeometry, oldMaterial));
+    //AFRAME.THREE.el.Object3D.scale.set( 1,1, 1);
+  },
+  //Описываем функцию удаления, ее должны вызывать, когда модель нужно удалить, смена сцены, или еще какие то события
+  remove: function() {
+    this.el.removeObject3D('mesh');
+  }
+}); 
+</script>
+</head>
+<body>
+    <a-scene background="color: #ECECEC">
+        <a-assets><video id="webcam" playsinline></video></a-assets>
+        <a-video id="oldvideo" autoplay playsinline></a-video>
+        <a-entity video="color: green;" position="0 0 -10" scale="1 1 1"> </a-entity> 
+        <a-plane position="0 0 -50" rotation="0 0 90" width="100" height="200"shadow material="src: #webcam"></a-plane>
+    </a-scene>
+</body>
