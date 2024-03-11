@@ -34,7 +34,7 @@
   //включаем зацикливание
     oldVideo.loop = true;
     // указываем источник видео    
-    oldVideo.src = 'video/WEBGL00000000.webm'; 
+    oldVideo.src = 'video/WEBGL.mp4'; 
     oldVideo.crossOrigin = 'anonymous';
     // отключаем звук
     oldVideo.muted = true;
@@ -61,7 +61,7 @@
     //Включаем у материала прозрачность, что фон стал прозрачным
     oldPlane.material.transparent = true;    
     //Задаем расположение для oldPlane, но это уже не требуется, так как есть строка ниже
-    oldPlane.position.set(0, 0, -1);
+    oldPlane.position.set(0, 0, 10);
     console.log("W "+window.screen.width + " H "+window.screen.height);
       // рассчитываем соотношение сторон
     
@@ -80,9 +80,9 @@
     <a-scene background="color: #ECECEC" embeddedarjs>
         <a-assets><video id="webcam" playsinline></video></a-assets> 
         <a-entity>    
-        <a-entity video="color: green;" position="0 0 -10" scale="1 1 1"> </a-entity> 
+        <a-entity video="color: green;" position="0 0 -11" scale="1 1 1"> </a-entity> 
         <a-entity camera look-controls>
-          <a-plane  position="0 0 -11" scale="10 10 10" shadow material="src: #webcam" width="window.screen.width" height="window.screen.height"></a-plane>
+          <a-plane  position="0 0 -12" scale="10 10 10" shadow material="src: #webcam" width="window.screen.width" height="window.screen.height"></a-plane>
         </a-entity>   
       </a-entity>
     </a-scene>
